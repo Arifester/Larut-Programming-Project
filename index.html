@@ -1,122 +1,68 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <title>Larut Programming Project</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NASA Explorer | Larut Programming</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
 </head>
 
-<body class="bg-black">
-  <header>
-    <nav class="bg-blue-300 text-sm p-2 text-center flex justify-center content-center">
-      <img src="Nasa Logo.png" class="w-12">
-      <div class="self-center">
-        <p class="text-center font-bold text-xl">NASA</p>
-      </div>
-    </nav>
-  </header>
-  <main class="container mx-auto">
+<body class="bg-gray-900 text-gray-100 min-h-screen flex flex-col">
 
-    <section id="apod" class="p-5">
+    <header class="bg-gray-800/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-700">
+        <nav class="container mx-auto px-5 py-3 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <img src="static/images/nasa-logo.png" class="w-10 h-10 animate-spin-slow" alt="NASA Logo">
+                <span class="font-bold text-xl tracking-wider">NASA <span class="text-blue-400 font-normal">Explorer</span></span>
+            </div>
+            <div class="text-xs text-gray-400 hidden md:block">
+                Practice Project · Larut Programming
+            </div>
+        </nav>
+    </header>
 
-      <br>
-      <h2 class="text-center font-bold text-xl bg-blue-300" id="apodtitle"></h2>
-      <figure class="flex justify-center">
-        <img class= "" width="300" src="" alt="" srcset="" id="apodimg">
-        <figcaption id="apodcopy text-white text-center"></figcaption>
-      </figure>
-      <article>
-        <p class="text-white" id="apoddesc">
+    <main class="container mx-auto px-5 py-10 flex-grow space-y-20">
 
-        </p>
-      </article>
-    </section>
+        <section id="apod">
+            <div class="mb-6 border-l-4 border-blue-500 pl-4">
+                <h3 class="text-2xl font-bold">Astronomy Picture of the Day</h3>
+                <p class="text-gray-400 text-sm">Discover the cosmos! Each day a different image.</p>
+            </div>
+            <div id="apod-container" class="bg-gray-800/50 p-6 rounded-2xl border border-gray-700">
+                </div>
+        </section>
 
-    <section id="epic" class="p-5">
-      <br>
-      <p class="text-center font-bold text-xl bg-blue-300"> NASA's EPIC camera onboard the NOAA DSCOVR spacecraft</p>
-    </section>
+        <section id="epic">
+            <div class="mb-6 border-l-4 border-blue-500 pl-4">
+                <h3 class="text-2xl font-bold">EPIC Earth Imagery</h3>
+                <p class="text-gray-400 text-sm">Polychromatic Imaging Camera on DSCOVR.</p>
+            </div>
+            <div id="epic-container">
+                 </div>
+        </section>
 
-    <section class="p-5" id="Asteroid">
+        <section id="asteroid">
+            <div class="mb-6 border-l-4 border-red-500 pl-4">
+                <h3 class="text-2xl font-bold text-red-100">Near Earth Objects (Today)</h3>
+                <p class="text-gray-400 text-sm">Asteroids passing close to Earth right now.</p>
+            </div>
+            <div id="asteroid-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                 </div>
+        </section>
 
-      <br>
+    </main>
 
-      <p class="text-center font-bold text-xl bg-blue-300">Nearest Asteroids Today</p>
+    <footer class="bg-gray-950 py-8 text-center text-gray-500 text-sm mt-10 border-t border-gray-800">
+        <p>&copy; Larut Programming — Powered by NASA Open APIs</p>
+    </footer>
 
-      <div id="Asteroid-near">
-
-      </div>
-
-    </section>
-
-
-  </main>
-  <footer>
-
-  </footer>
+    <script type="module" src="static/js/main.js"></script>
 </body>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script>
-
-  // API ke-1 APOD
-  const imgplaceholder = document.getElementById('apodimg')
-  const apodcaption = document.getElementById("apodcopy")
-  const apoddesc = document.getElementById("apoddesc")
-  const apodtitle = document.getElementById("apodtitle")
-
-  const apodapi = "https://api.nasa.gov/planetary/apod?api_key=8mw3h4vDtxwS6j72EYEgwx8dnhD6BlNet1LFWWZu"
-
-
-
-  axios.get(apodapi).then((res) => {
-
-    imgplaceholder.src = res.data['url']
-    apoddesc.innerText = res.data['explanation']
-    apodtitle.innerText = res.data['title']
-
-  })
-
-  //API ke-2 EPIC 
-  const epicapi = "https://api.nasa.gov/EPIC/api/natural/images?api_key=8mw3h4vDtxwS6j72EYEgwx8dnhD6BlNet1LFWWZu"
-  const epiccontent = document.getElementById('epic')
-
-
-  axios.get(epicapi).then((res) => {
-
-    res.data.forEach(item => {
-      let tgl = item.date.split(" ")
-      tgl = tgl[0].replaceAll('-', '/')
-      epiccontent.innerHTML += `
-      <h2 class= text-white>${item.date}</h2>
-      <figure class="">
-        <img class="w-15 justify-center" width="300" src="https://api.nasa.gov/EPIC/archive/natural/${tgl}/png/${item.image}.png?api_key=8mw3h4vDtxwS6j72EYEgwx8dnhD6BlNet1LFWWZu" alt="" srcset="" id="">
-        <figcaption class="text-white">${item.caption}</figcaption>
-      </figure>
-      `
-    });
-
-  })
-
-  // API ke-3 Asteroids-NeoWS
-
-  const asteroidapi = "https://api.nasa.gov/neo/rest/v1/feed?start_date=2023-11-04&end_date=2023-11-04&api_key=8mw3h4vDtxwS6j72EYEgwx8dnhD6BlNet1LFWWZu"
-  const asteroidcontent = document.getElementById('Asteroid-near')
-
-  axios.get(asteroidapi).then((res) => {
-    const data = res.data.near_earth_objects["2023-11-04"]
-    data.forEach((item) => {
-      asteroidcontent.innerHTML += `
-      <p class= text-white>${item.name}</p>
-      <p class= text-white>${item["close_approach_data"][0]["close_approach_date_full"]}</p>
-    `
-
-    });
-
-  })
-
-
-</script>
-
 </html>
