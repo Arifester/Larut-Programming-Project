@@ -69,7 +69,7 @@ export const UI = {
                     </div>
                     <div class="text-right">
                         <p class="text-sm font-bold ${isHazardous ? 'text-red-400' : 'text-green-400'}">
-                            ${isHazardous ? 'Bahaya!' : 'Aman'}
+                            ${isHazardous ? 'Danger!' : 'Safe'}
                         </p>
                         <p class="text-xs text-gray-500">Ø ${size} m</p>
                     </div>
